@@ -25,7 +25,13 @@ async function run() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
 
-
+        // Create Card collection
+        const cardCollection = client.db('college-spotlight').collection('card-data')
+        app.get('/cardData', async (req, res) => {
+            const data = cardCollection.find()
+            const result = await data.toArray()
+            res.send(result)
+        })
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
